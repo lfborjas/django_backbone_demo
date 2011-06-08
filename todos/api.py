@@ -1,6 +1,7 @@
 from tastypie.resources import ModelResource
-from todos.models import Todo
+from todos.models import Task 
 
-class TodoResource(ModelResource):
+class TaskResource(ModelResource):
     class Meta:
         queryset = Todo.objects.all()
+

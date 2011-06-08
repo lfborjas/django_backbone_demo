@@ -124,10 +124,6 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 )
 
-#For the api to work:
-APPEND_SLASH = False
-TASTYPIE_ALLOW_MISSING_SLASH = True
-
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error.
