@@ -116,12 +116,17 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'todos'
+    'todos',
+    'tastypie'
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+#For the api to work:
+APPEND_SLASH = False
+TASTYPIE_ALLOW_MISSING_SLASH = True
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
