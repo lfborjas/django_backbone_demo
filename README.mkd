@@ -6,6 +6,5 @@ A simple example of using django-piston to power a backbone app.
 
 * Create a virtual environment
 * virtualenv ..
-* pip install -e .. -r requirements.txt
+* pip install -E .. -r requirements.txt
 * ./manage.py syncdb
-

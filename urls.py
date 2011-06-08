@@ -9,5 +9,5 @@ from todos.api import TaskResource
 
 urlpatterns = patterns('',
         ('^$', direct_to_template, {'template': 'index.html'}),
-        ('^api/', include(task_r.urls))
+        ('^api/', include('api.urls'))
 )

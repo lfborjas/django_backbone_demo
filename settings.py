@@ -1,6 +1,6 @@
 # Django settings for todo_backbone project.
 
-DEBUG = True
+DEBUG = True 
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (

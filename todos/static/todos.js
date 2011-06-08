@@ -9,19 +9,19 @@ $(function(){
   // Todo Model
   // ----------
 
-  // Our basic **Todo** model has `content`, `order`, and `done` attributes.
+  // Our basic **Todo** model has `text` and `done` attributes.
   window.Todo = Backbone.Model.extend({
 
     // Default attributes for the todo.
     defaults: {
-      content: "empty todo...",
+      text: "empty todo...",
       done: false
     },
 
-    // Ensure that each todo created has `content`.
+    // Ensure that each todo created has `text`.
     initialize: function() {
-      if (!this.get("content")) {
-        this.set({"content": this.defaults.content});
+      if (!this.get("text")) {
+        this.set({"text": this.defaults.text});
       }
     },
 
@@ -30,7 +30,7 @@ $(function(){
       this.save({done: !this.get("done")});
     },
 
-    // Remove this Todo from *localStorage* and delete its view.
+    // Remove this Todo from the database
     clear: function() {
       this.destroy();
       this.view.remove();
@@ -41,15 +41,12 @@ $(function(){
   // Todo Collection
   // ---------------
 
-  // The collection of todos is backed by *localStorage* instead of a remote
-  // server.
   window.TodoList = Backbone.Collection.extend({
 
     // Reference to this collection's model.
     model: Todo,
-
-    // Save all of the todo items under the `"todos"` namespace.
-    localStorage: new Store("todos"),
+    
+    url : '/api/tasks',
 
     // Filter down the list of all todo items that are finished.
     done: function() {
@@ -60,18 +57,6 @@ $(function(){
     remaining: function() {
       return this.without.apply(this, this.done());
     },
-
-    // We keep the Todos in sequential order, despite being saved by unordered
-    // GUID in the database. This generates the next order number for new items.
-    nextOrder: function() {
-      if (!this.length) return 1;
-      return this.last().get('order') + 1;
-    },
-
-    // Todos are sorted by their original insertion order.
-    comparator: function(todo) {
-      return todo.get('order');
-    }
 
   });
 
@@ -93,7 +78,7 @@ $(function(){
     // The DOM events specific to an item.
     events: {
       "click .check"              : "toggleDone",
-      "dblclick div.todo-content" : "edit",
+      "dblclick div.todo-text" : "edit",
       "click span.todo-destroy"   : "clear",
       "keypress .todo-input"      : "updateOnEnter"
     },
@@ -107,7 +92,7 @@ $(function(){
       this.model.view = this;
     },
 
-    // Re-render the contents of the todo item.
+    // Re-render the texts of the todo item.
     render: function() {
       $(this.el).html(this.template(this.model.toJSON()));
       this.setContent();
@@ -115,13 +100,13 @@ $(function(){
     },
 
     // To avoid XSS (not that it would be harmful in this particular app),
-    // we use `jQuery.text` to set the contents of the todo item.
+    // we use `jQuery.text` to set the texts of the todo item.
     setContent: function() {
-      var content = this.model.get('content');
-      this.$('.todo-content').text(content);
+      var text = this.model.get('text');
+      this.$('.todo-text').text(text);
       this.input = this.$('.todo-input');
       this.input.bind('blur', this.close);
-      this.input.val(content);
+      this.input.val(text);
     },
 
     // Toggle the `"done"` state of the model.
@@ -137,7 +122,7 @@ $(function(){
 
     // Close the `"editing"` mode, saving changes to the todo.
     close: function() {
-      this.model.save({content: this.input.val()});
+      this.model.save({text: this.input.val()});
       $(this.el).removeClass("editing");
     },
 
@@ -219,8 +204,7 @@ $(function(){
     // Generate the attributes for a new Todo item.
     newAttributes: function() {
       return {
-        content: this.input.val(),
-        order:   Todos.nextOrder(),
+        text: this.input.val(),
         done:    false
       };
     },
@@ -252,8 +236,8 @@ $(function(){
     }
 
   });
-
-  // Finally, we kick things off by creating the **App**.
+  
   window.App = new AppView;
+ 
 
 });
