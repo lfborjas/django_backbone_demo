@@ -237,9 +237,6 @@ $(function(){
 
   });
 
-  // Finally, we kick things off by creating the **App**.
-  Backbone.emulateJSON = true
-
   window.App = new AppView;
  
 

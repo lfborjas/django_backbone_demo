@@ -4,6 +4,7 @@ from todos.models import Task
 
 class TaskHandler(BaseHandler):
     model = Task
+    fields = ('id', 'text', 'done')
 
     def read(self, request, task_id = None):
         mpr = Task.objects
@@ -14,6 +15,7 @@ class TaskHandler(BaseHandler):
             return mpr.all()
 
     def create(self, request):
+        print request.POST
         return Task.objects.create(**request.POST)
 
     def update(self, request, task_id):
