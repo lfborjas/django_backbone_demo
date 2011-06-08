@@ -1,0 +1,11 @@
+#Backbone in django with piston 
+
+A simple example of using django-piston to power a backbone app.
+
+#Install
+
+* Create a virtual environment
+* virtualenv ..
+* pip install -e .. -r requirements.txt
+* ./manage.py syncdb
+

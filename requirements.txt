@@ -1,1 +1,2 @@
-git+git://github.com/toastdriven/django-tastypie.git
+git+git://github.com/mozilla/django-piston.git
+Django==1.3
