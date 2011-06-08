@@ -15,11 +15,10 @@ class TaskHandler(BaseHandler):
             return mpr.all()
 
     def create(self, request):
-        print request.POST
-        return Task.objects.create(**request.POST)
+        return Task.objects.create(**request.data)
 
     def update(self, request, task_id):
-        Task.objects.filter(pk = task_id).update(**request.PUT)
+        Task.objects.filter(pk = task_id).update(**request.data)
         return Task.objects.get(pk = task_id)
 
     def delete(self, request, task_id):
